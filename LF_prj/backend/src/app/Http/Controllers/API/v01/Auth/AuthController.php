@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use app\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
 {
+
+
     public function register(Request $request)
     {
         $request->validate([
@@ -19,13 +22,17 @@ class AuthController extends Controller
             'email'=>['required','email','unique:users'],
             'password'=>['required'],
         ]);
+        
+        resolve(UserRepository::class)->create($request);
+    
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password) ,
-        ]);
+        return response()->json([
+            "message" => "create successfully completed"
+        ],200);
     }
+
+
+
 
     public function login(Request $request)
     {
@@ -44,9 +51,23 @@ class AuthController extends Controller
             ]);
     }
 
+
+
+    public function user()
+    {
+        return response()->json(Auth::user() , 200);
+    }
+
     public function logout()
     {
         Auth::logout();
+
+        return response()->json([
+            "message" => "logout successfully completed"
+        ],200);
     }
+
+
+   
 
 }
