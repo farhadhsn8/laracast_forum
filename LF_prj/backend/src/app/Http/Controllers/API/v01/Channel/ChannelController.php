@@ -11,7 +11,8 @@ class ChannelController extends Controller
 {
     public function getAllChannels()
     {
-        return response()->json(Channel::all() , 200);
+        $allChannels = resolve(ChannelRepository::class)->all();
+        return response()->json( $allChannels, 200);
     }
 
 
@@ -30,6 +31,23 @@ class ChannelController extends Controller
 
         return response()->json([
             'message' =>'channel created successfully'
+        ] , 201);
+    }
+
+
+
+
+    public function editChannel(Request $request)
+    {
+        $request->validate([
+            'name'=>['required']
+        ]);
+
+        resolve(ChannelRepository::class)->update($request->id,$request->name);
+
+       
+        return response()->json([
+            'message' =>'channel edited successfully'
         ] , 201);
     }
 }

@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 
 class ChannelRepository
 {
+
+    public function all()
+        {
+            return Channel::all();
+        }
+
+
+
     public function create($name): void
     {
         Channel::create([
@@ -15,4 +23,21 @@ class ChannelRepository
 
         ]);
     }
+   
+   
+    public function update($id,$name): void
+        {
+            Channel::find($id)->update([
+                'name' => $name,
+                'slug' => Str::slug($name)
+            ]);
+        }
+
+
+
 }
+
+
+
+
+
