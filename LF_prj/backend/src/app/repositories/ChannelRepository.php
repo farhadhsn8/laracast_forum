@@ -34,9 +34,15 @@ class ChannelRepository
         }
 
 
+        public function delete($id): void
+        {
+            
+            Channel::destroy($id);
+        }
+
+
 
 }
-
 
 
 
