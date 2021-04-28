@@ -17,17 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/')->group(function(){
     Route::prefix('auth')->group(function(){
-        Route::post('/register','API\v01\Auth\AuthController@register')->name('auth.register');
-        Route::post('/login','API\v01\Auth\AuthController@login')->name('auth.login');
-        Route::post('/user','API\v01\Auth\AuthController@user')->name('auth.user');
-        Route::post('/logout','API\v01\Auth\AuthController@logout')->name('auth.logout');
+        Route::post('/register','API\v1\Auth\AuthController@register')->name('auth.register');
+        Route::post('/login','API\v1\Auth\AuthController@login')->name('auth.login');
+        Route::post('/user','API\v1\Auth\AuthController@user')->name('auth.user');
+        Route::post('/logout','API\v1\Auth\AuthController@logout')->name('auth.logout');
     });
 
     Route::prefix('/channel')->group(function(){
-        Route::get('/all','API\v01\Channel\ChannelController@getAllChannels')->name('channel.all');
-        Route::post('/create','API\v01\Channel\ChannelController@createNewChannel')->name('channel.create');
-        Route::put('/update','API\v01\Channel\ChannelController@editChannel')->name('channel.edit');
-        Route::delete('/delete','API\v01\Channel\ChannelController@deleteChannel')->name('channel.delete');
+        Route::get('/all','API\v1\Channel\ChannelController@getAllChannels')->name('channel.all');
+        Route::post('/create','API\v1\Channel\ChannelController@createNewChannel')->name('channel.create');
+        Route::put('/update','API\v1\Channel\ChannelController@editChannel')->name('channel.edit');
+        Route::delete('/delete','API\v1\Channel\ChannelController@deleteChannel')->name('channel.delete');
 
 
 
