@@ -140,4 +140,20 @@ return [
 
         'store' => 'default',
     ],
+
+    'default_super_admin_email'=>'farhad@farhad',
+
+    'default_roles'=>[
+        'super Admin' , 
+        'User'
+    ],
+
+    'default_permissions'=>[
+        'user management' , 
+        'channel management' ,
+        'thread management' ,
+        'answers management' ,
+    ],
+
+
 ];
