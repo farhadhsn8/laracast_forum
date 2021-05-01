@@ -3,13 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\API\v1\Channel\ChannelController;
 
-Route::prefix('/channel')->middleware('can:channel management')->group(function () {
+Route::prefix('/channel')->group(function () {
     Route::get('/all', [
         ChannelController::class,
         'getAllChannelsList'
     ])->name('channel.all');
 
-    Route::middleware(['can:channel management', 'auth:sanctum'])->group(function () {
+    Route::middleware('can:channel management')->group(function () {
         Route::post('/create', [
             ChannelController::class,
             'createNewChannel'
