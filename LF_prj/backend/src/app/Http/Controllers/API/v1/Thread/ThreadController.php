@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\v1\Thread;
 
 use App\Models\Thread;
 use App\Http\Controllers\Controller;
+use App\Repositories\ThreadRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -20,5 +21,20 @@ class ThreadController extends Controller
     {
         $thread = resolve(ThreadRepository::class)->getThreadBySlug($slug);
         return \response()->json($thread ,200);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'channel_id'=>'required'
+        ]);
+
+        resolve(ThreadRepository::class)->store($request);
+
+        return \response()->json([
+            'message'=>'thread created successfully'
+        ],201);
     }
 }
