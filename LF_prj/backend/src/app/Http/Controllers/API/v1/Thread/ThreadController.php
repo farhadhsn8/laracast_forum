@@ -37,4 +37,20 @@ class ThreadController extends Controller
             'message'=>'thread created successfully'
         ],201);
     }
+
+
+    public function update(Request $request , Thread $thread)
+    {
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'channel_id'=>'required'
+        ]);
+
+        resolve(ThreadRepository::class)->update($thread,$request);
+
+        return \response()->json([
+            'message'=>'thread updated successfully'
+        ],200);
+    }
 }
