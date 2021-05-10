@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1\Thread;
 use App\Models\Thread;
 use App\Http\Controllers\Controller;
 use App\Repositories\ThreadRepository;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -50,22 +51,43 @@ class ThreadController extends Controller
             ]);
         }
 
-        resolve(ThreadRepository::class)->update($thread,$request);
+        if(Gate::forUser(auth()->user())->allows('user-thread', $thread))
+        {
+            resolve(ThreadRepository::class)->update($thread,$request);
+    
+            return \response()->json([
+                'message'=>'thread updated successfully'
+            ],200);
+        }
 
         return \response()->json([
-            'message'=>'thread updated successfully'
-        ],200);
+            'message'=>'access denied!'
+        ],403);
     }
 
 
     public function destroy($id)
     {
-        resolve(ThreadRepository::class)->destroy($id);
+        if(Gate::forUser(auth()->user())->allows('user-thread', Thread::find($id)))
+        {
+            resolve(ThreadRepository::class)->destroy($id);
 
+
+            return \response()->json([
+                'message'=>'thread deleted successfully'
+            ],200);
+        }
 
         return \response()->json([
-            'message'=>'thread deleted successfully'
-        ],200);
+            'message'=>'access denied!'
+        ],403);
+
+
+
+
+
+
+        
 
     }
 }
