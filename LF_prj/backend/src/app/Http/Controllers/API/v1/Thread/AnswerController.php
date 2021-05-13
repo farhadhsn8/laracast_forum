@@ -32,13 +32,24 @@ class AnswerController extends Controller
     
         resolve(AnswerRepository::class)->store($request);
 
-        return \Response()->json([] , 200);
+        return \Response()->json([
+            'message'=>'answer submitted successfully'
+        ] , 200);
     }
 
     
     public function update(Request $request, Answer $answer)
     {
-        //
+        $request->validate([
+            'content'=>'required' ,
+
+        ]);
+
+        resolve(AnswerRepository::class)->update($request , $answer);
+
+        return \Response()->json([
+            'message'=>'answer updated successfully'
+        ] , 200);
     }
 
   
