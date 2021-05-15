@@ -44,23 +44,35 @@ class AnswerController extends Controller
             'content'=>'required' ,
 
         ]);
+        if(Gate::forUser(auth()->user())->allows('user-answer', $answer))
+        {
+            resolve(AnswerRepository::class)->update($request , $answer);
 
-        resolve(AnswerRepository::class)->update($request , $answer);
+            return \Response()->json([
+                'message'=>'answer updated successfully'
+            ] , 200);
+        }
 
         return \Response()->json([
-            'message'=>'answer updated successfully'
-        ] , 200);
+            'message'=>'access denied'
+        ] , 403);
     }
 
   
     public function destroy(Answer $answer)
     {
+        if(Gate::forUser(auth()->user())->allows('user-answer', $answer))
+        {
+            resolve(AnswerRepository::class)->destroy( $answer);
 
-        resolve(AnswerRepository::class)->destroy( $answer);
 
+            return \Response()->json([
+                'message'=>'answer deleted successfully'
+            ] , 200);
+        }
 
         return \Response()->json([
-            'message'=>'answer deleted successfully'
-        ] , 200);
+            'message'=>'access denied'
+        ] , 403);
     }
 }
