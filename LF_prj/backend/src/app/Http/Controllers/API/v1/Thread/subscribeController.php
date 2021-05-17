@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\v1;
+namespace App\Http\Controllers\API\v1\Thread;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,7 @@ class subscribeController extends Controller
         ] , 200);
     }
 
-    public function unsubscribe(Thread $thread)
+    public function unSubscribe(Thread $thread)
     {
         Subscribe::query()->where([
             ['thread_id' , $thread->id] , 
