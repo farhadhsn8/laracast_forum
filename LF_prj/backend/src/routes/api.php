@@ -29,3 +29,27 @@ Route::prefix('v1/')->group(function () {
     // Thread Routes
     include __DIR__ . '/v1/threads_routes.php';
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function f($a) {
+//     if($a==1){
+//         return 1;
+//     }
+//     return $a * f($a - 1);
+// }
+
+// Route::post('/salam', function () {
+//     return f(4);
+// });
