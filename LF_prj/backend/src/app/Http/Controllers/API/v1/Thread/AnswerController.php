@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\v1\Thread;
 
-use App\Answer;
+use App\Models\Answer;
 use App\Http\Controllers\Controller;
 use App\Notifications\NewReplySubmitted;
 use App\Repositories\AnswerRepository;
@@ -12,6 +12,7 @@ use App\Models\Subscribe;
 use App\Models\Thread;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,6 @@ class AnswerController extends Controller
         $request->validate([
             'content'=>'required' ,
             'thread_id'=>'required'
-
         ]);
     
         resolve(AnswerRepository::class)->store($request);
@@ -50,7 +50,8 @@ class AnswerController extends Controller
 
         // Increase User Score
         if (Thread::find($request->input('thread_id'))->user_id !== auth()->id()) {
-            auth()->user()->increment('score', 10);
+            $id = Auth::id();
+            User::find($id)->increment('score',10);
         }
 
         return \Response()->json([

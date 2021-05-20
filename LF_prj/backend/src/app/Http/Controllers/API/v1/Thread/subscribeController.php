@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\API\v1\Thread;
 
-use App\Http\Controllers\Controller;
+use App\Models\Thread;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class subscribeController extends Controller
 {
     public function subscribe(Thread $thread)
     {
-        auth()->user()->subscribes()->create([
+        Subscribe::query()->where([
+            ['thread_id' , $thread->id] , 
+            ['user_id'   , auth()->id()]
+        ])->create([
             'thread_id' => $thread->id
         ]);
        
@@ -17,13 +24,15 @@ class subscribeController extends Controller
             'message' => 'user subscribed successfully'
         ] , 200);
     }
-
     public function unSubscribe(Thread $thread)
     {
         Subscribe::query()->where([
             ['thread_id' , $thread->id] , 
             ['user_id'   , auth()->id()]
         ])->delete();
+
+
+        
        
         return response()->json([
             'message' => 'user unsubscribed successfully'
