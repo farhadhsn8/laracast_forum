@@ -54,6 +54,8 @@ class AnswerController extends Controller
             User::find($id)->increment('score',10);
         }
 
+        // auth()->user()->increment('score' , 10);
+
         return \Response()->json([
             'message'=>'answer submitted successfully'
         ] , 200);
