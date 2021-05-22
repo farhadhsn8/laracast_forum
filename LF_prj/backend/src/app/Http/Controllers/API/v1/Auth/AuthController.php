@@ -58,7 +58,12 @@ class AuthController extends Controller
 
     public function user()
     {
-        return response()->json(Auth::user() , 200);
+        $data=[
+            Auth::user(),
+            'notification' => Auth::user()->unreadNotifications(),
+
+        ];
+        return response()->json($data , 200);
     }
 
     public function logout()

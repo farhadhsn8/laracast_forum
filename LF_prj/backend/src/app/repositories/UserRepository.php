@@ -23,10 +23,10 @@ class UserRepository
         return User::find($id);
     }
 
-    // public function leaderboards()
-    // {
-    //     return User::query()->orderByDesc('score')->paginate(20);
-    // }
+    public function leaderboards()
+    {
+        return User::query()->orderByDesc('score')->paginate(20);
+    }
 
     // public function isBlock(): bool
     // {
