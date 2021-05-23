@@ -24,6 +24,11 @@ class AnswerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct(){
+        $this->middleware(['user-block'])->except([ 'index']);
+    }
+
     public function index()
     {
         $answer = resolve(AnswerRepository::class)->getAllAnswers();

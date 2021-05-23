@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class subscribeController extends Controller
 {
+    public function __construct(){
+        $this->middleware(['user-block']);
+    }
+
     public function subscribe(Thread $thread)
     {
         Subscribe::query()->where([
