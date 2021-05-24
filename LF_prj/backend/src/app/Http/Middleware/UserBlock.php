@@ -16,7 +16,8 @@ class UserBlock
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->check() && $request->user()->whereIs_block(false)){
+        $isBlock = resolve(UserRepository::class)->isBlock();
+        if(! $isBlock){
             return $next($request);
         }
         else{
