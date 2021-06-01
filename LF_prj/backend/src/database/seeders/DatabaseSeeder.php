@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Thread;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -14,28 +15,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $role_in_database = Role::where('name', config('permission.default_roles')[0]);
-
-        if($role_in_database->count() < 1)
-        {
-            foreach (config('permission.default_roles') as $role)
-            {
-                Role::create([
-                    'name' =>$role
+        $roleInDatabase = \Spatie\Permission\Models\Role::where('name', config('permission.default_roles')[0]);
+        if ($roleInDatabase->count() < 1) {
+            foreach (config('permission.default_roles') as $role) {
+                \Spatie\Permission\Models\Role::create([
+                    'name' => $role
                 ]);
             }
         }
 
-        $permission_in_database = Permission::where('name', config('permission.default_permissions')[0]);
-
-        if($permission_in_database->count() < 1)
-        {
-            foreach (config('permission.default_permissions') as $permission)
-            {
-                Permission::create([
-                    'name' =>$permission
+        $permissionInDatabase = \Spatie\Permission\Models\Permission::where('name', config('permission.default_permissions')[0]);
+        if ($permissionInDatabase->count() < 1) {
+            foreach (config('permission.default_permissions') as $permission) {
+                \Spatie\Permission\Models\Permission::create([
+                    'name' => $permission
                 ]);
             }
         }
+
+        Thread::factory( 100)->create();
     }
 }

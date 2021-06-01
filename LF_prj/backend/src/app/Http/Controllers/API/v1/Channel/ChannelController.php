@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\v1\Channel;
 
 use App\Models\Channel;
 use App\Http\Controllers\Controller;
+use App\Repositories\ChannelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -16,7 +17,7 @@ class ChannelController extends Controller
     }
 
 
-    
+
 
     public function createNewChannel(Request $request)
     {
@@ -24,7 +25,7 @@ class ChannelController extends Controller
             'name'=>['required']
         ]);
 
-            //use repository 
+            //use repository
 
         resolve(ChannelRepository::class)->create($request->name);
 
@@ -45,7 +46,7 @@ class ChannelController extends Controller
 
         resolve(ChannelRepository::class)->update($request->id,$request->name);
 
-       
+
         return response()->json([
             'message' =>'channel edited successfully'
         ] , 201);

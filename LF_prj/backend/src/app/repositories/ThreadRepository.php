@@ -11,10 +11,10 @@ class ThreadRepository
 {
     public function getAllAvailableThreads()
     {
-        return Thread::where('flag',1)->latest()->get();
+        return Thread::query()->where('flag',1)->with(['channel:id,name,slug','user:id,name'])->latest()->paginate(10);
     }
 
-    public function getThreadBySlug($slug) 
+    public function getThreadBySlug($slug)
     {
         return Thread::where('slug',$slug)->where('flag',1)->first();
     }
@@ -33,7 +33,7 @@ class ThreadRepository
 
     public function update(Thread $thread , Request $request)
     {
-        
+
 
         if ($request->has('best_answer_id'))
         {
@@ -47,7 +47,7 @@ class ThreadRepository
                 'slug'=>Str::slug($request->input('title')),
                 'content'=>$request->input('content'),
                 'channel_id'=>$request->input('channel_id'),
-                
+
                 ]);
         }
     }
@@ -56,7 +56,7 @@ class ThreadRepository
 
     public function destroy($id)
     {
-        Thread::destroy($id);      
+        Thread::destroy($id);
     }
 
 
