@@ -9,26 +9,33 @@ use app\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class AuthController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth')->only('user');
+    }
 
     public function register(Request $request)
     {
+
         $request->validate([
             'name'=>['required'],
             'email'=>['required','email','unique:users'],
             'password'=>['required'],
         ]);
-        
+
+
         $user = resolve(UserRepository::class)->create($request);
-      
-      
-        $defaultSuperAdminEmail=config('permission.default_super_admin_email');
-        $user->email ===$defaultSuperAdminEmail ? $user->assignRole('Super Admin') :  $user->assignRole('User');
-        
+
+
+        //$defaultSuperAdminEmail=config('permission.default_super_admin_email');
+        //$user->email ===$defaultSuperAdminEmail ? $user->assignRole('Super Admin')  :  $user->assignRole('User')and dd(1);
         return response()->json([
             "message" => "create successfully completed"
         ],200);
@@ -76,6 +83,6 @@ class AuthController extends Controller
     }
 
 
-   
+
 
 }
