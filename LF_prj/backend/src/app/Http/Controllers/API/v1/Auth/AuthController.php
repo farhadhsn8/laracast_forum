@@ -68,6 +68,7 @@ class AuthController extends Controller
         $data=[
             Auth::user(),
             'notification' => Auth::user()->unreadNotifications(),
+            'message' =>'successful'
 
         ];
         return response()->json($data , 200);
