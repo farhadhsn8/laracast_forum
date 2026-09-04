@@ -1,0 +1,18 @@
+# --- IDE / OS ---
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# --- Local environment & secrets ---
+.env
+.env.local
+.env.backup
+
+# --- Local MySQL data dir (docker-compose bind mount) ---
+/mysql/
+
+# --- Editor temp files ---
+*.swp
+*~
